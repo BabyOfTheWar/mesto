@@ -71,11 +71,11 @@
             <h2 class="popup__container-title">Новое место</h2>
             <form class="popup__form popup__form-add" name="profile-card">
                 <label class="popup__label">
-                    <input id="place" type="text" placeholder="Введите имя" class="popup__form-info popup__form-info_input-card-name" minlength="2" maxlength="30" required >
+                    <input id="place" type="text" name="name" placeholder="Введите имя" class="popup__form-info popup__form-info_input-card-name popup__input" minlength="2" maxlength="30" required >
                     <span class="popup__input-error-message place-error" type="text"></span>
                 </label>
                 <label class="popup__label">
-                    <input type="url" id="url" placeholder="Ссылка на картинку" class="popup__form-info popup__form-info_input-card-ink" required>
+                    <input type="url" id="url" name="link" placeholder="Ссылка на картинку" class="popup__form-info popup__form-info_input-card-ink popup__input" required>
                     <span class="popup__input-error-message url-error" ></span>
                 </label>
                 <button type="submit" class="popup__button-save popup__button-add">Создать</button>

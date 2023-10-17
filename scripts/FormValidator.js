@@ -47,8 +47,12 @@ class FormValidator {
         });
     }
 
-    enableValidation() {
+    resetValidation() {
         this._toggleButtonState();
+
+        this.formInputList.forEach((inputElement) => {
+            this._hideInputError(inputElement)
+        });
 
         this._formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
@@ -56,6 +60,10 @@ class FormValidator {
             this.buttonElement.disabled = true;
         });
 
+    }
+
+
+    enableValidation() {
         this._setEventListeners();
 
     }
