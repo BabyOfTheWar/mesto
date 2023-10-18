@@ -54,17 +54,16 @@ class FormValidator {
             this._hideInputError(inputElement)
         });
 
-        this._formElement.addEventListener('submit', (evt) => {
-            evt.preventDefault();
-            this.buttonElement.classList.add(this._settings.inactiveButtonClass);
-            this.buttonElement.disabled = true;
-        });
+
 
     }
 
 
     enableValidation() {
         this._setEventListeners();
+        this._formElement.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+        });
 
     }
 }

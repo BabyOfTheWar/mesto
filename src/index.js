@@ -35,6 +35,7 @@ function raiseImagePopup (link, name) {
 }
 
 function raiseEditProfilePopup () {
+    popupEditForm.setInputValues(userInfo.getUserInfo());
     popupEditForm.open();
 }
 
