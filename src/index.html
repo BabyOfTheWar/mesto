@@ -6,7 +6,7 @@
     <title>Место</title>
 </head>
 <body>
-<div class="page">
+<section class="page">
     <header class="header">
         <a href="#">
             <img src="<%=require('../img/header/logo.svg')%>" class="header__logo" alt="Место">
@@ -28,14 +28,17 @@
         </section>
         <section class="template-section">
             <template class="element-tmp">
-                <article class="element">
+                <article class="element" id="">
                     <button type="button" class="element__trash-button">
                         <img class="element__img-delete" src="<%=require('../img/elements/Trash.svg')%>" alt="Кнопка удаления" />
                     </button>
                     <img src="#" alt="Изображение Карточки" class="element__img">
                     <div class="element__footer">
                         <h2 class="element__footer-text"></h2>
-                        <button type="button" class="element__footer-button"></button>
+                        <div class="element__like-wrapper">
+                            <button type="button" class="element__footer-button"></button>
+                            <span id="element__like-counter" class="element__like-counter"></span>
+                        </div>
                     </div>
                 </article>
             </template>
@@ -56,7 +59,7 @@
                     <span class="popup__input-error-message name-error"></span>
                 </label>
                 <label class="popup__label">
-                    <input id="title" type="text"  name="description" placeholder="Введите профессию" value="Исследователь океана" class="popup__form-info popup__form-info_input_title popup__input" minlength="2" maxlength="200" required>
+                    <input id="title" type="text"  name="about" placeholder="Введите профессию" value="Исследователь океана" class="popup__form-info popup__form-info_input_title popup__input" minlength="2" maxlength="200" required>
                     <span class="popup__input-error-message title-error"></span>
                 </label>
                 <button type="submit" class="popup__button-save popup__button-save-profile">Сохранить</button>
@@ -91,6 +94,30 @@
             </button>
         </div>
     </section>
-</div>
+    <section class="popup popup-delete">
+        <div class="popup__container-delete">
+            <button class="popup__button-close" type="button">
+                <img src="<%=require('../img/elements/CloseIcon.svg')%>" class="popup__close-img" alt="Закрыть">
+            </button>
+            <h2 class="popup__container-title">Вы уверенны?</h2>
+            <button type="submit" class="popup__button-save popup__button-delete">Да</button>
+        </div>
+    </section>
+    <section class="popup popup-avatar">
+        <div class="popup__container popup__container-avatar">
+            <button class="popup__button-close" type="button">
+                <img src="<%=require('../img/elements/CloseIcon.svg')%>" class="popup__close-img" alt="Закрыть">
+            </button>
+            <h2 class="popup__container-title">Обновить аватар</h2>
+            <form class="popup__form popup__form-avatar" name="form-avatar" novalidate>
+                <label class="popup__label">
+                    <input id="avatar" type="url" name="avatar" class="popup__form-info popup__form-info_input-avatar-link popup__input" placeholder="Ссылка на аватар" required>
+                    <span class="popup__input-error-message avatar-error" type="text"></span>
+                </label>
+                <button type="submit" class="popup__button-save popup__button-avatar">Сохранить</button>
+            </form>
+        </div>
+    </section>
+</section>
 </body>
 </html>
