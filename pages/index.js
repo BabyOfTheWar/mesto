@@ -39,23 +39,15 @@ const formValidatorAvatar = new FormValidator(settings, formPopupEditAvatar);
 formValidatorAvatar.enableValidation();
 let userCurrentId;
 
-
-api.getInitialCards()
-    .then((cards) => {
+Promise.all([api.getUserInfoApi(), api.getInitialCards()])
+    .then(([userData, cards]) => {
+        userCurrentId = userData['_id'];
+        userInfo.setUserInfo(userData.name, userData.about);
         renderInitialCards(cards);
     })
     .catch((error) => {
-        console.error(`Ошибка при загрузке начальных карточек: ${error}`);
+        console.error(`Ошибка при загрузке данных профиля и начальных карточек: ${error}`);
     });
-
-api.getUserInfoApi()
-    .then((data) => {
-        userCurrentId = data['_id'];
-        userInfo.setUserInfo(data.name, data.about);
-    })
-    .catch((error) => {
-        console.error(`Ошибка при загрузке данных профиля: ${error}`)
-    })
 
 function raiseImagePopup (link, name) {
     popupImage.open(link, name);
@@ -89,6 +81,7 @@ function handleEditProfileSubmit (data) {
     api.setUserInfoApi(data)
         .then((data) => {
             userInfo.setUserInfo(data.name, data.about);
+            popupEditForm.close();
         })
         .catch((error) => {
             console.error(`Ошибка при отправке данных пользователя: ${error}`);
@@ -120,7 +113,6 @@ function handleConfirmation (id, card) {
         })
         .catch((error) => {
             console.log(`Ошибка удаления: ${error}`);
-            popupFormConfirmation.close();
         })
         .finally(() => {
             popupFormConfirmation.showPreloader(false);
@@ -132,6 +124,7 @@ function handleAvatarChange (data) {
     api.setNewAvatar(data)
         .then((res) => {
             avatar.style.backgroundImage = `url(${res.avatar})`;
+            popupEditAvatar.close();
         })
         .catch((error) => {
             console.error(`Ошибка при обновлении аватара: ${error}`);
