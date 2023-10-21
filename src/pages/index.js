@@ -32,7 +32,8 @@ const popupFormConfirmation = new PopupWithConfirmation('.popup-delete', handleC
 const popupEditAvatar = new PopupWithForm('.popup-avatar', handleAvatarChange);
 const section = new Section({
     items: [],
-    renderer: addNewCard
+    renderer: (item) => {
+       section.addItem(addNewCard(item, userCurrentId));},
 }, '.template-section');
 
 const formValidatorAvatar = new FormValidator(settings, formPopupEditAvatar);
@@ -42,8 +43,8 @@ let userCurrentId;
 Promise.all([api.getUserInfoApi(), api.getInitialCards()])
     .then(([userData, cards]) => {
         userCurrentId = userData['_id'];
-        userInfo.setUserInfo(userData.name, userData.about);
-        renderInitialCards(cards);
+        userInfo.setUserInfo(userData.name, userData.about, userData.avatar);
+        section.render(cards);
     })
     .catch((error) => {
         console.error(`Ошибка при загрузке данных профиля и начальных карточек: ${error}`);
@@ -59,8 +60,8 @@ function raiseEditProfilePopup () {
 }
 
 function raiseAddCardPopup () {
-    formValidatorAdd.resetValidation();
-    popupAddForm.setInputValues({
+    formValidatorAdd.resetValidation(); //Извините, не понял этого комментария, вероятно. Тут идет очистка ошибок, а поля формы
+    popupAddForm.setInputValues({       //очищаются в методе close модуля PopupWithForm. Или что то имелось в виду другое?
         name: '',
         link: ''
     });
@@ -80,7 +81,7 @@ function handleEditProfileSubmit (data) {
     popupEditForm.showPreloader();
     api.setUserInfoApi(data)
         .then((data) => {
-            userInfo.setUserInfo(data.name, data.about);
+            userInfo.setUserInfo(data.name, data.about, data.avatar);
             popupEditForm.close();
         })
         .catch((error) => {
@@ -88,7 +89,6 @@ function handleEditProfileSubmit (data) {
         })
         .finally(() => popupEditForm.showPreloader(false))
 }
-
 
 function handleNewCardSubmit (data) {
     popupAddForm.showPreloader()
@@ -100,8 +100,7 @@ function handleNewCardSubmit (data) {
         .catch((error) => {
             console.error(`Ошибка при при загрузке карточки: ${error}`);
         })
-        .finally(() => popupEditForm.showPreloader(false));
-
+        .finally(() => popupAddForm.showPreloader(false));
 }
 
 function handleConfirmation (id, card) {
@@ -123,14 +122,13 @@ function handleAvatarChange (data) {
     popupEditAvatar.showPreloader();
     api.setNewAvatar(data)
         .then((res) => {
-            avatar.style.backgroundImage = `url(${res.avatar})`;
+            avatar.src = res.avatar;
             popupEditAvatar.close();
         })
         .catch((error) => {
             console.error(`Ошибка при обновлении аватара: ${error}`);
         })
         .finally(() => popupEditAvatar.showPreloader(false));
-
 }
 
 function addNewCard (data, userCurrentId) {
@@ -143,12 +141,6 @@ function addNewCard (data, userCurrentId) {
         removeCardLike: handleCardDislike
     }, ".element-tmp");
     return createCardElement.getCard();
-}
-
-function renderInitialCards (card) {
-    card.reverse().forEach((data) => {
-        section.addItem(addNewCard(data, userCurrentId))
-    })
 }
 
 function handleCardLike (id) {
@@ -166,6 +158,7 @@ function handleCardDislike (id) {
         })
         .catch((error) => console.log(`Ошибка отправки запроса на сервер при попытке отмены лайка: ${error}`))
 }
+
 
 buttonOpenEditProfilePopup.addEventListener('click', raiseEditProfilePopup);
 buttonOpenAddCardPopup.addEventListener('click', raiseAddCardPopup);

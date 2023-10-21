@@ -4,7 +4,8 @@ class PopupWithConfirmation extends Popup{
     constructor(popupSelector, handleConfirmation) {
         super(popupSelector);
         this._submitCallback = handleConfirmation;
-        this._buttonSubmit = this._popup.querySelector('.popup__button-save');
+        this._submitButton = this._popup.querySelector('.popup__button-save');
+        this._submitButtonDefault = this._submitButton.textContent;
     }
 
     open(id, card) {
@@ -14,7 +15,7 @@ class PopupWithConfirmation extends Popup{
     }
 
     showPreloader(isLoading = true) {
-        isLoading ? this._buttonSubmit.textContent = 'Удаление...' : this._buttonSubmit.textContent = 'Да';
+        isLoading ? this._submitButton.textContent = 'Удаление...' : this._submitButton.textContent = this._submitButtonDefault
     }
 
     setEventListeners() {

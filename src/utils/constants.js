@@ -5,7 +5,7 @@ const formPopupSaveProfile = document.forms["profile-edit"];
 const formPopupEditAvatar = document.forms["form-avatar"];
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__title');
-const avatar = document.querySelector('.profile__avatar');
+const avatar = document.querySelector('.profile__img');
 const buttonOpenEditAvatar = document.querySelector('.profile__avatar');
 
 
@@ -14,39 +14,6 @@ const userData = {
     about: profileJob,
     avatar: avatar
 };
-const cardsInitial = [
-
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    },
-
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    }
-
-];
 
 const apiConfig = {
     url: 'https://mesto.nomoreparties.co/v1/cohort-77/',
@@ -56,7 +23,7 @@ const apiConfig = {
     }
 }
 
-export { cardsInitial,
+export {
     buttonOpenEditProfilePopup,
     buttonOpenAddCardPopup,
     buttonOpenEditAvatar,
